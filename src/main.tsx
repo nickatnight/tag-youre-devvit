@@ -1,8 +1,41 @@
 // Learn more at developers.reddit.com/docs
 import { Devvit, useState } from '@devvit/public-api';
 
+/*
+ * Plugins
+ */
+
 Devvit.configure({
   redditAPI: true,
+});
+
+/*
+ * Custom Post
+ */
+
+Devvit.addCustomPostType({
+  name: 'Tag You\'re Devvit',
+  height: 'tall',
+  render: (_context) => {
+    const [counter, setCounter] = useState(0);
+
+    return (
+      <vstack height="100%" width="100%" gap="medium" alignment="center middle">
+        <image
+          url="logo.png"
+          description="logo"
+          imageHeight={256}
+          imageWidth={256}
+          height="48px"
+          width="48px"
+        />
+        <text size="large">{`Click counter: ${counter}`}</text>
+        <button appearance="primary" onPress={() => setCounter((counter) => counter + 1)}>
+          Click me!
+        </button>
+      </vstack>
+    );
+  },
 });
 
 // Add a menu item to the subreddit menu for instantiating the new experience post
@@ -29,30 +62,5 @@ Devvit.addMenuItem({
   },
 });
 
-// Add a post type definition
-Devvit.addCustomPostType({
-  name: 'Experience Post',
-  height: 'regular',
-  render: (_context) => {
-    const [counter, setCounter] = useState(0);
-
-    return (
-      <vstack height="100%" width="100%" gap="medium" alignment="center middle">
-        <image
-          url="logo.png"
-          description="logo"
-          imageHeight={256}
-          imageWidth={256}
-          height="48px"
-          width="48px"
-        />
-        <text size="large">{`Click counter: ${counter}`}</text>
-        <button appearance="primary" onPress={() => setCounter((counter) => counter + 1)}>
-          Click me!
-        </button>
-      </vstack>
-    );
-  },
-});
 
 export default Devvit;
